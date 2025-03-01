@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Log In | Obito</title>
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        font-family: "Poppins", sans-serif;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      class="flex max-lg:flex-col bg-[#F8FAF9] max-lg:justify-between h-screen"
+    >
+      <div class="w-1/2 p-12">
+        <form
+          action=""
+          id="registerForm"
+          class="bg-white flex flex-col justify-between items-stretch h-full gap-4 rounded-xl border border-gray-300 p-4"
+        >
+          <h2 class="text-[22px] font-bold">Upgrade Your Skills</h2>
+          <div class="flex flex-col items-start gap-4">
+            <input
+              type="file"
+              id="photo"
+              accept="image/*"
+              class="hidden"
+              onchange="previewPhoto(event)"
+            />
+            <label
+              for="photo"
+              class="cursor-pointer border border-gray-300 p-2 rounded-full text-center block w-24 h-24 flex justify-center items-center"
+            >
+              Add Photo
+            </label>
+
+            <div class="flex gap-x-4 items-center justify-start">
+              <img
+                id="photoPreview"
+                class="w-24 h-24 rounded-full object-cover hidden"
+                alt="Photo Preview"
+              />
+              <button
+                id="deletePhoto"
+                class="bg-[#FFE3E1] text-[#EF372B] text-sm font-bold px-6 py-1 rounded-full hidden"
+                onclick="removePhoto()"
+              >
+                DELETE PHOTO
+              </button>
+            </div>
+          </div>
+
+          <div>
+            <label for="name">Complete Name</label>
+            <div class="relative">
+              <input
+                type="text"
+                id="name"
+                class="w-full p-2 pl-10 border border-gray-300 rounded-full"
+                placeholder="Type your complete name"
+                required
+              />
+              <span class="absolute inset-y-0 left-0 flex items-center pl-3">
+                <img src="/assets/profile.svg" alt="profile icon" />
+              </span>
+            </div>
+          </div>
+          <div>
+            <label for="occupation">Occupation</label>
+            <div class="relative">
+              <input
+                type="text"
+                id="occupation"
+                class="w-full p-2 pl-10 border border-gray-300 rounded-full"
+                placeholder="Programmer"
+                required
+              />
+              <span class="absolute inset-y-0 left-0 flex items-center pl-3">
+                <img src="/assets/briefcase.svg" alt="briefcase icon" />
+              </span>
+            </div>
+          </div>
+          <div>
+            <label for="email">Email Address</label>
+            <div class="relative">
+              <input
+                type="email"
+                id="email"
+                class="w-full p-2 pl-10 border border-gray-300 rounded-full"
+                placeholder="Type your valid email address"
+                required
+              />
+              <span class="absolute inset-y-0 left-0 flex items-center pl-3">
+                <img src="/assets/sms.svg" alt="sms icon" />
+              </span>
+            </div>
+          </div>
+          <div>
+            <label for="password">Password</label>
+            <div class="relative">
+              <input
+                type="password"
+                id="password"
+                class="w-full p-2 pl-10 border border-gray-300 rounded-full"
+                placeholder="********"
+                required
+              />
+              <span class="absolute inset-y-0 left-0 flex items-center pl-3">
+                <img
+                  src="/assets/shield-security.svg"
+                  alt="shiel security icon"
+                />
+              </span>
+            </div>
+          </div>
+          <div>
+            <label for="confirmpass">Confirm Password</label>
+            <div class="relative">
+              <input
+                type="password"
+                id="confirmpass"
+                class="w-full p-2 pl-10 border border-gray-300 rounded-full"
+                placeholder="********"
+                required
+              />
+              <span class="absolute inset-y-0 left-0 flex items-center pl-3">
+                <img
+                  src="/assets/shield-security.svg"
+                  alt="shiel security icon"
+                />
+              </span>
+            </div>
+          </div>
+          <div>
+            <button
+              class="bg-[#2F6A62] hover:cursor-pointer hover:bg-[#2C5C55] font-semibold text-white w-full rounded-full py-3 text-center"
+              onclick="handleSubmit(event)"
+            >
+              Create My Account
+            </button>
+          </div>
+          <script>
+            function previewPhoto(event) {
+              const file = event.target.files[0];
+              if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                  document.getElementById("photoPreview").src = e.target.result;
+                  document
+                    .querySelector("label[for='photo']")
+                    .classList.add("hidden");
+                  document
+                    .getElementById("photoPreview")
+                    .classList.remove("hidden");
+                  document
+                    .getElementById("deletePhoto")
+                    .classList.remove("hidden");
+                };
+                reader.readAsDataURL(file);
+              }
+            }
+
+            function removePhoto() {
+              document.getElementById("photo").value = ""; // Reset input file
+              document.getElementById("photoPreview").classList.add("hidden");
+              document.getElementById("deletePhoto").classList.add("hidden");
+              document
+                .querySelector("label[for='photo']")
+                .classList.remove("hidden");
+            }
+
+            document
+              .getElementById("registerForm")
+              .addEventListener("submit", function (event) {
+                event.preventDefault();
+
+                // Ambil nilai input
+                const photo = document.getElementById("photo").value.trim();
+                const name = document.getElementById("name").value.trim();
+                const occupation = document
+                  .getElementById("occupation")
+                  .value.trim();
+                const email = document.getElementById("email").value.trim();
+                const password = document
+                  .getElementById("password")
+                  .value.trim();
+                const confirmpass = document
+                  .getElementById("confirmpass")
+                  .value.trim();
+
+                // Cek apakah ada yang kosong
+                if (
+                  !photo ||
+                  !name ||
+                  !occupation ||
+                  !email ||
+                  !password ||
+                  !confirmpass
+                ) {
+                  alert("Semua field harus diisi!");
+                  return;
+                }
+
+                // Cek apakah password & confirm password sama
+                if (password !== confirmpass) {
+                  alert("Password dan Confirm Password tidak cocok!");
+                  return;
+                }
+
+                console.log("Photo:", photo);
+                console.log("Name:", name);
+                console.log("Occupation:", occupation);
+                console.log("Email:", email);
+                console.log("Password:", password);
+                console.log("Confirm Password:", confirmpass);
+
+                alert("Form berhasil dikirim!");
+              });
+          </script>
+        </form>
+      </div>
+      <div class="w-1/2">
+        <img
+          src="/assets/hero-login.png"
+          alt="hero login"
+          class="w-full h-screen"
+        />
+      </div>
+    </div>
+  </body>
+</html>
